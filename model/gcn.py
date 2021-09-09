@@ -69,7 +69,8 @@ class GCNRelationModel(nn.Module):
             print("Finetune all embeddings.")
 
     def forward(self, inputs):
-        words, masks, pos, deprel, head, subj_pos, obj_pos = inputs # unpack
+        # words, masks, pos, deprel, head, subj_pos, obj_pos = inputs # unpack
+        words, masks, deprel, head, subj_pos, obj_pos = inputs
         l = (masks.data.cpu().numpy() == 0).astype(np.int64).sum(1)
         maxlen = max(l)
 
@@ -139,13 +140,14 @@ class GCN(nn.Module):
         return rnn_outputs
 
     def forward(self, adj, inputs):
-        words, masks, pos, deprel, head, subj_pos, obj_pos= inputs # unpack
+        # words, masks, pos, deprel, head, subj_pos, obj_pos= inputs # unpack
+        words, masks,deprel, head, subj_pos, obj_pos= inputs
         word_embs = self.emb(words)
         embs = [word_embs]
-        if self.opt['pos_dim'] > 0:
-            embs += [self.pos_emb(pos)]
-        if self.opt['ner_dim'] > 0:
-            embs += [self.ner_emb(ner)]
+        # if self.opt['pos_dim'] > 0:
+        #     embs += [self.pos_emb(pos)]
+        # if self.opt['ner_dim'] > 0:
+        #     embs += [self.ner_emb(ner)]
         embs = torch.cat(embs, dim=2)
         embs = self.in_drop(embs)
 

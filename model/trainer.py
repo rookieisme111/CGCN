@@ -59,20 +59,35 @@ def unpack_batch(batch, cuda):
     lens = batch[1].eq(0).long().sum(1).squeeze()
     return inputs, labels, tokens, head, subj_pos, obj_pos, lens
 '''
+# def unpack_batch(batch, cuda):
+
+#     if cuda:
+#         inputs = [Variable(b.cuda()) for b in batch[:7]]
+#         labels = Variable(batch[7].cuda())
+#     else:
+#         inputs = [Variable(b) for b in batch[:7]]
+#         labels = Variable(batch[7])
+#     tokens = batch[0]
+#     head = batch[4]
+#     subj_pos = batch[5]
+#     obj_pos = batch[6]
+#     lens = batch[1].eq(0).long().sum(1).squeeze()
+#     return inputs, labels, tokens, head, subj_pos, obj_pos, lens   
+
 def unpack_batch(batch, cuda):
 
     if cuda:
-        inputs = [Variable(b.cuda()) for b in batch[:7]]
-        labels = Variable(batch[7].cuda())
+        inputs = [Variable(b.cuda()) for b in batch[:6]]
+        labels = Variable(batch[6].cuda())
     else:
-        inputs = [Variable(b) for b in batch[:7]]
-        labels = Variable(batch[7])
+        inputs = [Variable(b) for b in batch[:6]]
+        labels = Variable(batch[6])
     tokens = batch[0]
-    head = batch[4]
-    subj_pos = batch[5]
-    obj_pos = batch[6]
+    head = batch[3]
+    subj_pos = batch[4]
+    obj_pos = batch[5]
     lens = batch[1].eq(0).long().sum(1).squeeze()
-    return inputs, labels, tokens, head, subj_pos, obj_pos, lens   
+    return inputs, labels, tokens, head, subj_pos, obj_pos, lens 
 
 class GCNTrainer(Trainer):
     def __init__(self, opt, emb_matrix=None):
