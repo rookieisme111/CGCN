@@ -103,7 +103,7 @@ def load_sgns_vocab(file, wv_dim):
     Load all words from glove.
     """
     vocab = set()
-    with open(file, encoding='utf8') as f:
+    with open(file, 'r',encoding='utf8') as f:
         for line in f:
             if len(line.split())== 2:
                 continue
@@ -118,7 +118,7 @@ def my_build_embedding(wv_file, vocab, wv_dim):
     emb[constant.PAD_ID] = 0 # <pad> should be all 0
 
     w2id = {w: i for i, w in enumerate(vocab)}
-    with open(wv_file, encoding="utf8") as f:
+    with open(wv_file, 'r',encoding="utf8") as f:
         for line in f:
             elems = line.split()
             # token = ''.join(elems[0:-wv_dim])
@@ -126,4 +126,3 @@ def my_build_embedding(wv_file, vocab, wv_dim):
             if token in w2id:
                 emb[w2id[token]] = [float(v) for v in elems[-wv_dim:]]
     return emb
-    
