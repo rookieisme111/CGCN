@@ -15,7 +15,7 @@ from sklearn.metrics import precision_score,recall_score,f1_score
 parser = argparse.ArgumentParser()
 parser.add_argument('model_dir', type=str, help='Directory of the model.')
 parser.add_argument('--model', type=str, default='best_model.pt', help='Name of the model file.')
-parser.add_argument('--data_dir', type=str, default='dataset/semeval')
+parser.add_argument('--data_dir', type=str, default='dataset/traffic')
 parser.add_argument('--dataset', type=str, default='test', help="Evaluate on dev or test.")
 
 parser.add_argument('--seed', type=int, default=1234)
