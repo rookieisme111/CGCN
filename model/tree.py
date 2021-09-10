@@ -95,7 +95,10 @@ def head_to_tree(head, tokens, len_, prune, subj_pos, obj_pos):
                 tmp += [h-1]
                 obj_ancestors.add(h-1)
                 h = head[h-1]
-            cas.intersection_update(tmp)
+            if cas is None:
+                cas = set(tmp)
+            else:
+                cas.intersection_update(tmp)
 
         # find lowest common ancestor
         if len(cas) == 1:
